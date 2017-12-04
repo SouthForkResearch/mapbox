@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8' />
+        <title>Riverscapes Example</title>
+        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
+        <style>
+            body { margin:0; padding:0; }
+            #map { position:absolute; top:0; bottom:0; width:100%; }
+        </style>
+    </head>
+    <body>
+        <style>
+            #menu {
+                background: #fff;
+                position: absolute;
+                z-index: 1;
+                top: 10px;
+                right: 10px;
+                border-radius: 3px;
+                width: 120px;
+                border: 1px solid rgba(0,0,0,0.4);
+                font-family: 'Open Sans', sans-serif;
+            }
+
+            #menu a {
+                font-size: 13px;
+                color: #404040;
+                display: block;
+                margin: 0;
+                padding: 0;
+                padding: 10px;
+                text-decoration: none;
+                border-bottom: 1px solid rgba(0,0,0,0.25);
+                text-align: center;
+            }
+
+            #menu a:last-child {
+                border: none;
+            }
+
+            #menu a:hover {
+                background-color: #f8f8f8;
+                color: #404040;
+            }
+
+            #menu a.active {
+                background-color: #3887be;
+                color: #ffffff;
+            }
+
+            #menu a.active:hover {
+                background: #3074a4;
+            }
+        </style>
+
+        <nav id="menu"></nav>
+        <div id="map"></div>
+
+        <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiamVzc2VsYW5nZG9uIiwiYSI6Ik95UXU5NzAifQ.pWjhVfOGoElD6u8shUEBlw';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/jesselangdon/cjaofaiol22j42rqoar7jzy5c',
+            fresh: true,
+            zoom: 8,
+            center: [-117.666363, 46.432784]
+        });
+
+        map.on('load', function () {
+            map.addSource("solar-aq8dd2", {
+                type: 'vector',
+                url: 'mapbox://jesselangdon.6qtnx57k'
+            });
+            map.addLayer({
+                "id": "solar",
+                "type": "line",
+                "metadata": {},
+                "source": "solar-aq8dd2",
+                "source-layer": "solar-aq8dd2",
+                "minzoom": 6,
+                "filter": [
+                    "==",
+                    "$type",
+                    "LineString"
+                ],
+                "layout": {
+                    "visibility": "visible",
+                    "line-cap": "round",
+                    "line-join": "round",
+                    "line-round-limit": 1
+                },
+                "paint": {
+                    "line-width": 2,
+                    "line-color": {
+                        "base": 1,
+                        "type": "exponential",
+                        "property": "area_solar",
+                        "stops": [
+                            [100000,"#3869FF"],
+                            [150000,"#2FE8FF"],
+                            [200000,"#27FF8C"],
+                            [250000,"#44FF1E"],
+                            [300000,"#D2FF16"],
+                            [350000,"#FF920D"],
+                            [1000000,"#FF051A"]
+                        ],
+                        "default": "hsl(0, 0%, 50%)"
+                    },
+                }
+            });
+
+            map.addSource("conductivity-chwpaw", {
+                type: 'vector',
+                url: 'mapbox://jesselangdon.1atu1362'
+            });
+            map.addLayer({
+                "id": "conductivity",
+                "type": "line",
+                "source": "conductivity-chwpaw",
+                "source-layer": "conductivity-chwpaw",
+                "minzoom": 8,
+                "filter": [
+                    "==",
+                    "$type",
+                    "LineString"
+                ],
+                "layout": {
+                    "visibility": "none",
+                    "line-join": "round",
+                    "line-cap": "round"
+                },
+                "paint": {
+                    "line-width": 2,
+                    "line-color": {
+                        "base": 1,
+                        "type": "interval",
+                        "property": "prdcond",
+                        "stops": [
+                            [50,"#E9A3FF"],
+                            [100,"#D98EF1"],
+                            [150,"#CA79E3"],
+                            [200,"#BA64D6"],
+                            [250,"#AB4FC8"],
+                            [300,"#9B3ABA"],
+                            [10000,"#8C25AD"]
+                        ],
+                        "default": "hsl(0, 0%, 50%)"
+                    }
+                }
+            });
+
+            map.addSource("confinement-73uw1c", {
+                type: 'vector',
+                url: 'mapbox://jesselangdon.b0rul7wi'
+            });
+            map.addLayer({
+                "id": "confinement",
+                "type": "line",
+                "source": "confinement-73uw1c",
+                "source-layer": "confinement-73uw1c",
+                "minzoom": 8,
+                "filter": [
+                    "==",
+                    "$type",
+                    "LineString"
+                ],
+                "layout": {
+                    "visibility": "none",
+                    "line-cap": "round",
+                    "line-join": "round"
+                },
+                "paint": {
+                    "line-width": 2,
+                    "line-color": {
+                        "base": 1,
+                        "type": "interval",
+                        "property": "CONF_Value",
+                        "stops": [
+                            [0.2,"hsl(9, 100%, 86%)"],
+                            [0.3,"hsl(9, 100%, 81%)"],
+                            [0.4,"hsl(9, 100%, 77%)"],
+                            [0.5,"hsl(9, 96%, 72%)"],
+                            [0.6,"hsl(9, 84%, 63%)"],
+                            [0.7, "hsl(9, 76%, 55%)"],
+                            [0.8,"hsl(9, 75%, 48%)"],
+                            [0.9,"hsl(9, 85%, 43%)"],
+                            [1,"hsl(9, 100%, 34%)"]
+                        ],
+                        "default": "hsl(0, 0%, 50%)"
+                    }
+                }
+            });
+
+            map.addSource("gnat-4zdrvs", {
+                type: 'vector',
+                url: 'mapbox://jesselangdon.bbtex1ps'
+            });
+            map.addLayer({
+                "id": "gnat",
+                "type": "line",
+                "source": "gnat-4zdrvs",
+                "source-layer": "gnat-4zdrvs",
+                "minzoom": 8,
+                "filter": [
+                    "==",
+                    "$type",
+                    "LineString"
+                ],
+                "layout": {
+                    "visibility": "none",
+                    "line-cap": "round",
+                    "line-join": "round"
+                },
+                "paint": {
+                    "line-width": 2,
+                    "line-color": {
+                        "base": 1,
+                        "type": "interval",
+                        "property": "C_Sin",
+                        "stops": [
+                            [1,"hsl(189, 81%, 79%)"],
+                            [1.02,"hsl(189, 91%, 65%)"],
+                            [1.04, "hsl(189, 81%, 53%)"],
+                            [1.06,"hsl(189, 83%, 43%)"],
+                            [1.08,"hsl(189, 89%, 34%)"],
+                            [1.1,"hsl(189, 90%, 28%)"],
+                            [1.3,"hsl(189, 96%, 21%)"]
+                        ],
+                        "default": "hsl(0, 0%, 50%)"
+                    }
+                }
+            })
+        });
+
+        var toggleableLayerIds = [ 'conductivity', 'confinement', 'gnat', 'solar' ];
+
+        for (var i = 0; i < toggleableLayerIds.length; i++) {
+            var id = toggleableLayerIds[i];
+
+            var link = document.createElement('a');
+            link.href = '#';
+            link.className = 'active';
+            link.textContent = id;
+
+            link.onclick = function (e) {
+                var clickedLayer = this.textContent;
+                e.preventDefault();
+                e.stopPropagation();
+
+                var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+                if (visibility === 'visible') {
+                    map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                    this.className = '';
+                } else {
+                    this.className = 'active';
+                    map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                }
+            };
+
+            var layers = document.getElementById('menu');
+            layers.appendChild(link);
+        }
+
+        // Add zoom and rotation controls to the map.
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        </script>
+
+    </body>
+</html>
