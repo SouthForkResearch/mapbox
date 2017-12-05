@@ -54,9 +54,16 @@
             #menu a.active:hover {
                 background: #3074a4;
             }
+
+            #menu p {
+                text-align: center;
+            }
+
         </style>
 
-        <nav id="menu"></nav>
+        <nav id="menu">
+            <p>Click to display</p>
+        </nav>
         <div id="map"></div>
 
         <script>
@@ -87,7 +94,7 @@
                     "LineString"
                 ],
                 "layout": {
-                    "visibility": "visible",
+                    "visibility": "none",
                     "line-cap": "round",
                     "line-join": "round",
                     "line-round-limit": 1
@@ -242,7 +249,7 @@
 
             var link = document.createElement('a');
             link.href = '#';
-            link.className = 'active';
+            link.className = '';
             link.textContent = id;
 
             link.onclick = function (e) {
