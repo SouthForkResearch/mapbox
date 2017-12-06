@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8' />
+        <title>Predicted Stream Temperature</title>
+        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
+        <style>
+            body { margin:0; padding:0; }
+
+            h2, h3 {
+                margin: 10px;
+                font-size: 1.2em;
+            }
+
+            h3 {
+                font-size: 1em;
+            }
+
+            h4 {
+                margin: 10px;
+                font-size: 0.8em;
+            }
+
+            p {
+                font-size: 0.75em;
+                margin: 10px;
+                text-align: left;
+            }
+            
+            #map { position:absolute; top:0; bottom:0; width:100%; }
+
+            .map-overlay {
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              background: rgba(255, 255, 255, 0.8);
+              margin-right: 20px;
+              font-family: Arial, sans-serif;
+              overflow: auto;
+              border-radius: 3px;
+            }
+
+            #features {
+              top: 0;
+              height: 120px;
+              margin-top: 20px;
+              width: 200px;
+            }
+
+            #legend {
+              padding: 15px;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+              line-height: 18px;
+              height: 220px;
+              margin-bottom: 40px;
+              width: 180px;
+            }
+
+            .legend-key {
+              display: inline-block;
+              border-radius: 20%;
+              width: 10px;
+              height: 10px;
+              margin-right: 5px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <div class='map-overlay' id='features'>
+          <h3>Predicted Stream Temperature</h3>
+          <div>
+              <p>Modeling methods described <a href="#" target="_blank">here</a></p>
+          </div>
+          <div>
+              <p>Download the <a href="Downloads/streamtemp.zip">shapefile</a></p>
+          </div>
+        </div>
+        <div class='map-overlay' id='legend'>
+          <div id='pd'>
+            <h4>Temperature: °Celsius</h4>
+            <p>(Mean values, July 28th, 2013)</p>
+          </div>
+        </div>
+
+        <script>
+        // define access token
+        mapboxgl.accessToken = 'pk.eyJ1IjoiamVzc2VsYW5nZG9uIiwiYSI6Ik95UXU5NzAifQ.pWjhVfOGoElD6u8shUEBlw';
+        //create map
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/jesselangdon/cjavf1ohtlz7s2so5ulg8jliu',
+            zoom: 8.3,
+            center: [-116.938242, 46.295528]
+        });
+
+        // wait for map to load before adjusting it
+        map.on('load', function() {
+
+            // make a pointer cursor
+            map.getCanvas().style.cursor = 'default';
+
+            // define layer category bins
+            var layers = ['6 - 10', 
+                            '10 - 12', 
+                            '12 - 14', 
+                            '14 - 16', 
+                            '16 - 18', 
+                            '18 - 20', 
+                            '20 - 22',
+                            '22+'];
+            var colors = ["#003E8F",
+                            "#0041FF", 
+                            "#0BE1FF", 
+                            "#17FF8C", 
+                            "#3CFF23", 
+                            "#C7FF2F", 
+                            "#FFBA3B", 
+                            "#FF4D47"];
+
+            // create legend
+            for (i=0; i<layers.length; i++) {
+                var layer = layers[i];
+                var color = colors[i];
+                var item = document.createElement('div');
+                var key = document.createElement('span');
+                key.className = 'legend-key';
+                key.style.backgroundColor = color;
+
+                var value = document.createElement('span');
+                value.innerHTML = layer;
+                item.appendChild(key);
+                item.appendChild(value);
+                legend.appendChild(item);
+            }
+
+        });
+
+        // Add zoom and rotation controls to the map.
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        </script>
+
+    </body>
+</html>

@@ -44,7 +44,7 @@
 
             #features {
               top: 0;
-              height: 80px;
+              height: 100px;
               margin-top: 20px;
               width: 212px;
             }
@@ -70,8 +70,18 @@
     </head>
     <body>
         <div id="map"></div>
-        <div class='map-overlay' id='features'><h3>Channel Confinement</h3><div><p>Modeling methods described <a href="http://confinement.riverscapes.xyz/" target="_blank">here.</a></p></div></div>
-        <div class='map-overlay' id='legend'><div id='pd'><h4>Confinement Ratio</h4></div></div>
+        <div class='map-overlay' id='features'>
+          <h3>Channel Confinement</h3>
+          <div>
+            <p>Modeling methods described <a href="http://confinement.riverscapes.xyz/" target="_blank">here</a></p>
+          </div>
+          <div>
+              <p>Download the <a href="Downloads/confinement.zip">shapefile</a></p>
+          </div>
+        </div>
+        <div class='map-overlay' id='legend'>
+          <div id='pd'><h4>Confinement Ratio</h4></div>
+        </div>
 
         <script>
         // define access token

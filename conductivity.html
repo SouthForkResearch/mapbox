@@ -44,7 +44,7 @@
 
             #features {
               top: 0;
-              height: 80px;
+              height: 100px;
               margin-top: 20px;
               width: 212px;
             }
@@ -70,8 +70,18 @@
     </head>
     <body>
         <div id="map"></div>
-        <div class='map-overlay' id='features'><h3>Predicted Conductivity</h3><div><p>Modeling methods described <a href="https://riverscapes.github.io/Conductivity">here.</a></p></div></div>
-        <div class='map-overlay' id='legend'><div id='pd'><h4>Conductivity: μS cm<sup>−1</sup></h4></div></div>
+        <div class='map-overlay' id='features'>
+          <h3>Predicted Conductivity</h3>
+          <div>
+            <p>Modeling methods described <a href="https://riverscapes.github.io/Conductivity" target="_blank">here</a></p>
+          </div>
+          <div>
+            <p>Download the <a href="Downloads/conductivity.zip">shapefile</a></p>
+          </div>
+        </div>
+        <div class='map-overlay' id='legend'>
+          <div id='pd'><h4>Conductivity: μS cm<sup>−1</sup></h4></div>
+        </div>
 
         <script>
         // define access token
@@ -91,20 +101,20 @@
             map.getCanvas().style.cursor = 'default';
 
             // define layer category bins
-            var layers = ['0-50', 
-                            '51-100', 
-                            '101-150', 
-                            '151-200', 
-                            '201-250', 
-                            '251-300', 
-                            '300+'];
-            var colors = ["#E9A3FF", 
-                            "#D98EF1", 
-                            "#CA79E3", 
-                            "#BA64D6", 
-                            "#AB4FC8", 
-                            "#9B3ABA", 
-                            "#8C25AD"];
+            var layers = ['0 - 40', 
+                            '40 - 80', 
+                            '80 - 120', 
+                            '120 - 160', 
+                            '160 - 200', 
+                            '200 - 240', 
+                            '280+'];
+            var colors = ["#ECB8FF", 
+                            "#CF9EE1", 
+                            "#B285C3", 
+                            "#966CA5", 
+                            "#795287", 
+                            "#5C3969", 
+                            "#40204C"];
 
             // create legend
             for (i=0; i<layers.length; i++) {

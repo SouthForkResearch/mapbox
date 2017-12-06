@@ -44,7 +44,7 @@
 
             #features {
               top: 0;
-              height: 80px;
+              height: 100px;
               margin-top: 20px;
               width: 212px;
             }
@@ -53,7 +53,7 @@
               padding: 15px;
               box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
               line-height: 18px;
-              height: 200px;
+              height: 255px;
               margin-bottom: 40px;
               width: 180px;
             }
@@ -70,8 +70,18 @@
     </head>
     <body>
         <div id="map"></div>
-        <div class='map-overlay' id='features'><h3>Channel Sinuosity</h3><div><p>Modeling methods described <a href="https://gnat.riverscapes.xyz/Stream-Sinuosity-and-Planform" target="_blank">here.</a></p></div></div>
-        <div class='map-overlay' id='legend'><div id='pd'><h4>Sinuosity</h4></div></div>
+        <div class='map-overlay' id='features'>
+            <h3>Channel Sinuosity</h3>
+            <div>
+                <p>Modeling methods described <a href="https://gnat.riverscapes.xyz/Stream-Sinuosity-and-Planform" target="_blank">here</a></p>
+            </div>
+            <div>
+                <p>Download the <a href="Downloads/gnat.zip">shapefile</a></p>
+            </div>
+        </div>
+        <div class='map-overlay' id='legend'>
+            <div id='pd'><h4>Sinuosity</h4></div>
+        </div>
 
         <script>
         // define access token
@@ -91,22 +101,30 @@
             map.getCanvas().style.cursor = 'default';
 
             // define layer category bins
-            var layers = ['0.0 - 0.2', 
-                            '0.2 - 0.3', 
-                            '0.3 - 0.4', 
-                            '0.4 - 0.5', 
-                            '0.5 - 0.6', 
-                            '0.6 - 0.7',
-                            '0.7 - 0.8',
-                            '0.8 - 0.9',
-                            '0.9 - 1.0'];
-            var colors = ["#00E7E7", 
-                            "#05D8DB", 
-                            "#0AC9CF", 
-                            "#0FBAC3", 
-                            "#14ABB7", 
-                            "#199CAB", 
-                            "#1E8E9F"];
+            var layers = ['0 - 1.0', 
+                            '1.0 - 1.02', 
+                            '1.02 - 1.04', 
+                            '1.04 - 1.06', 
+                            '1.06 - 1.08', 
+                            '1.08 - 1.10',
+                            '1.10 - 1.20',
+                            '1.2 - 1.4',
+                            '1.4 - 1.6',
+                            '1.6 - 1.8',
+                            '1.8 - 2.0',
+                            '2.0+'];
+            var colors = ["#60E1E1", 
+                            "#59D3D3", 
+                            "#53C6C6", 
+                            "#4CB9B9", 
+                            "#46ABAB", 
+                            "#3F9E9E", 
+                            "#399191",
+                            "#328383",
+                            "#2C7676",
+                            "#256969",
+                            "#1F5C5C",
+                            "#1B4B4B"];
 
             // create legend
             for (i=0; i<layers.length; i++) {
